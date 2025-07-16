@@ -1,5 +1,5 @@
 <x-app-layout>
-<div class="py-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
+<div class="py-6 max-w-7xl mx-auto sm:px-6 lg:px-8 mt-10">
         <div class="mb-6">
             <h1 class="text-2xl font-bold text-white">Daftar Permintaan Tenaga Kerja</h1>
         </div>
