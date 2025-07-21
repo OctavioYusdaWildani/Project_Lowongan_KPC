@@ -1,10 +1,10 @@
-<nav x-data="{ open: false }" class="fixed top-0 w-full z-50 bg-white shadow ">
+<nav x-data="{ open: false }" class="fixed top-0 w-full z-50 bg-white shadow py-1 ">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                        <x-application-logo class="block h-11 w-auto fill-current text-gray-800" />
+                        <x-application-logo class="block h-12 w-auto fill-current text-gray-800" />
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -18,7 +18,7 @@
                         {{ __('Psikotes') }}
                     </x-nav-link>
                     <x-nav-link :href="route('guest.dashboard')" :active="request()->routeIs('guest.dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('About') }}
                     </x-nav-link>
 
                 </div>
@@ -28,7 +28,7 @@
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 bg-white hover:text-gray-700 transition rounded-md">
+                        <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-[#00205B] bg-blue-100 hover:text--600 transition rounded-xl">
                             <div>{{ Auth::user()->name }}</div>
                             <div class="ms-1">
                                 <svg class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">

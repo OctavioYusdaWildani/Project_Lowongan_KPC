@@ -161,7 +161,7 @@
 
     
     <!-- Tampilan Index -->
-    <div class="bg-transparent shadow overflow-x-auto sm:rounded-lg mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="bg-transparent shadow overflow-x-auto sm:rounded-lg mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mb-5">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-100">
                     <tr>

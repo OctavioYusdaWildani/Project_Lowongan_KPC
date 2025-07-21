@@ -83,7 +83,7 @@
                     </tbody>
                 </table>
 
-                <div class="mt-6 flex">
+                <div class="mt-6 flex gap-4">
                     <form action="{{ route('lowongan.index') }}" method="GET">
                         <button type="submit" class="bg-gray-200 text-gray-800 px-6 py-2 rounded hover:bg-gray-300">
                             ← Kembali ke daftar lowongan

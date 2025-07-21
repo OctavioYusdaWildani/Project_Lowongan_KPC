@@ -1,8 +1,18 @@
 <x-app-layout>
 
     @if(session('success'))
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-            {{ session('success') }}
+        <div
+            x-data="{ show: true }"
+            x-init="setTimeout(() => show = false, 3000)"
+            x-show="show"
+            x-transition
+            class="fixed top-6 left-1/2 transform -translate-x-1/2 bg-green-50 border border-green-400 text-green-800 px-6 py-4 rounded-lg shadow-md flex items-center gap-3 z-50"
+        >
+            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" stroke-width="2"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span class="font-semibold">{{ session('success') }}</span>
         </div>
     @endif
 
@@ -170,7 +180,7 @@
                 <div class="mt-6">
                     <form action="{{ route('ptk.approve', $ptk->id) }}" method="POST" class="inline">
                         @csrf
-                        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                        <button type="submit" class="bg-[#00205B;] text-white px-4 py-2 rounded hover:bg-green-700">
                             Approve
                         </button>
                     </form>
