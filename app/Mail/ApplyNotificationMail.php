@@ -21,6 +21,6 @@ class ApplyNotificationMail extends Mailable
     public function build()
     {
         return $this->subject('🔔 Lamaran Baru Masuk')
-                    ->view('emails.lamaran_masuk');
+                    ->view('emails.apply_notification');
     }
 }

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use Illuminate\Support\Facades\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Illuminate\Support\Facades\Log;
 
 class PTKController extends Controller
 {
@@ -35,7 +36,7 @@ class PTKController extends Controller
             'keahlian_khusus' => 'required|string',
             'Tes_buta_warna' => 'required|string',
             'uraian_singkat' => 'required|string',
-            'struktur_organisasi' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+            'struktur_organisasi' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
             'permintaan' => 'required|in:penggantian,penambahan',
             'alasan' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240'
