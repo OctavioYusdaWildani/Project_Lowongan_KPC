@@ -181,7 +181,7 @@
                             {{-- Captcha --}}
                             <x-captcha />
 
-                            <x-primary-button>
+                            <x-primary-button class="mt-4">
                                 Ajukan Lamaran
                             </x-primary-button>                    
                         </form>
