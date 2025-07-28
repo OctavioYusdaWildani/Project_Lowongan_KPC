@@ -27,7 +27,7 @@ class Apply extends Model
     ];
     public function ptk()
     {
-        return $this->belongsTo(Ptk::class);
+        return $this->belongsTo(PTK::class);
     }
     public function user()
     {
