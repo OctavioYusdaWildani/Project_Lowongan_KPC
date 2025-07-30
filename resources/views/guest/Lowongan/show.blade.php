@@ -72,7 +72,7 @@
                                 <div class="border rounded p-2 max-w-full overflow-auto">
                                     <img src="{{ asset('storage/' . $ptk->struktur_organisasi) }}"
                                         alt="Struktur Organisasi"
-                                        class="rounded shadow max-w-[400px] max-h-[300px] object-contain mx-auto">
+                                        class="zoomable rounded shadow max-w-[400px] max-h-[300px] object-contain mx-auto">
                                 </div>
                             </td>
                         </tr>   

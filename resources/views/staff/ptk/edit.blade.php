@@ -128,7 +128,7 @@
                         @if($ptk->struktur_organisasi)
                             <p class="mt-2 text-sm text-gray-600">Gambar lama:</p>
                             <img src="{{ asset('storage/' . $ptk->struktur_organisasi) }}"
-                                alt="Struktur Organisasi" class="w-64 h-auto mt-2 rounded shadow">
+                                alt="Struktur Organisasi" class="zoomable w-64 h-auto mt-2 rounded shadow">
                         @endif
                     </div>
 
@@ -139,7 +139,7 @@
                         @if($ptk->image)
                             <p class="mt-2 text-sm text-gray-600">Gambar lama:</p>
                             <img src="{{ asset('storage/' . $ptk->image) }}"
-                                alt="Gambar Pendukung" class="w-64 h-auto mt-2 rounded shadow">
+                                alt="Gambar Pendukung" class="zoomable w-64 h-auto mt-2 rounded shadow">
                         @endif
                     </div>
 

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 
-class akun_psikotest extends Model
+class Akun_psikotest extends Model
 {
     protected $fillable = [
     'nama',

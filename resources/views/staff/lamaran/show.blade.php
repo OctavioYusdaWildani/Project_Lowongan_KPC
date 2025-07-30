@@ -67,35 +67,35 @@
             <div class="mb-4">
                 <p class="text-gray-800 font-semibold mb-1">Gambar Pendukung</p>
                 <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                    @forelse($lamaran->images ?? [] as $image)
-                        <a href="{{ asset('storage/' . $image) }}" target="_blank">
-                            <img src="{{ asset('storage/' . $image) }}" alt="Gambar" class="rounded shadow border">
-                        </a>
+                    @forelse($lamaran->images ?? [] as $image)   
+                        <img src="{{ asset('storage/' . $image) }}" alt="Gambar" class="zoomable rounded shadow border">
                     @empty
                         <p class="text-gray-400">Tidak ada gambar</p>
                     @endforelse
                 </div>
             </div>
 
-            <div class="mt-6 flex gap-4">
-                <!-- Lanjut ke proses berikut -->
-                <form action="{{ route('lamaran.approve', $lamaran->id) }}" method="POST">
-                    @csrf
-                    <button class="bg-[#00205B;] text-white font-bold py-2 px-4 rounded"
-                        onclick="return confirm('Lanjutkan ke proses selanjutnya?')">
-                        Continue Next Process
-                    </button>
-                </form>
+            @if ($lamaran->status === 'melamar')
+                <div class="mt-6 flex gap-4">
+                    <!-- Lanjut ke proses berikut -->
+                    <form action="{{ route('lamaran.approve', $lamaran->id) }}" method="POST">
+                        @csrf
+                        <button class="bg-[#00205B] text-white font-bold py-2 px-4 rounded"
+                            onclick="return confirm('Lanjutkan ke proses selanjutnya?')">
+                            Continue Next Process
+                        </button>
+                    </form>
 
-                <!-- Tolak lamaran -->
-                <form action="{{ route('lamaran.reject', $lamaran->id) }}" method="POST">
-                    @csrf
-                    <button class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                        onclick="return confirm('Yakin menolak lamaran ini?')">
-                        Reject
-                    </button>
-                </form>
-            </div>
+                    <!-- Tolak lamaran -->
+                    <form action="{{ route('lamaran.reject', $lamaran->id) }}" method="POST">
+                        @csrf
+                        <button class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                            onclick="return confirm('Yakin menolak lamaran ini?')">
+                            Reject
+                        </button>
+                    </form>
+                </div>
+            @endif
 
 
             <form action="{{ route('lamaran.index') }}" method="GET">

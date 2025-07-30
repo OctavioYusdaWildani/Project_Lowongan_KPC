@@ -11,6 +11,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\PtkExport;
 
 class PTKController extends Controller
 {
@@ -234,84 +236,9 @@ public function update(Request $request, Ptk $ptk)
         return redirect()->route('ptk.index')->with('success', 'PTK berhasil diajukan ulang dan menunggu persetujuan kembali.');
     }
 
-    public function exportCsv()
+    public function exportExcel()
     {
-        $ptks = \App\Models\Ptk::all();
-
-        $csvHeader = [
-            'Unit', 
-            'Jabatan', 
-            'Departemen', 
-            'Tanggal Permintaan', 
-            'Jumlah Tenaga Kerja', 
-            'Jumlah Permintaan',
-            'Pendidikan', 
-            'Jenis Kelamin', 
-            'Usia', 
-            'Status Karyawan', 
-            'Pengalaman', 
-            'Bahasa Asing',
-            'Keahlian Khusus', 
-            'Tes Buta Warna', 
-            'Uraian Singkat', 
-            'Permintaan', 
-            'Alasan', 
-            'Status'
-        ];
-
-        $rows = [];
-
-        foreach ($ptks as $ptk) {
-            $status = 'Pending';
-            if ($ptk->status_manager === 'rejected' || $ptk->status_director === 'rejected' || $ptk->status_hr === 'rejected') {
-                $status = 'Rejected';
-            } elseif ($ptk->is_published) {
-                $status = 'Approved';
-            }
-
-            $rows[] = [
-                $ptk->unit,
-                $ptk->jabatan,
-                $ptk->departemen,
-                $ptk->tanggal_permintaan,
-                $ptk->Jumlah_tenaga_kerja,
-                $ptk->jumlah_permintaan,
-                $ptk->pendidikan,
-                $ptk->jenis_kelamin,
-                $ptk->usia,
-                $ptk->status_karyawan,
-                $ptk->pengalaman,
-                $ptk->bahasa_asing,
-                $ptk->keahlian_khusus,
-                $ptk->Tes_buta_warna,
-                $ptk->uraian_singkat,
-                $ptk->permintaan,
-                $ptk->alasan,
-                $status
-            ];
-        }
-
-        $callback = function () use ($csvHeader, $rows) {
-            $file = fopen('php://output', 'w');
-
-            fputcsv($file, $csvHeader, ';');
-
-            foreach ($rows as $row) {
-                fputcsv($file, $row, ';');
-            }
-
-            fclose($file);
-        };
-
-        $filename = 'Data PTK ' . now()->format('d-m-Y') . '.csv';
-
-        return response()->stream($callback, 200, [
-            "Content-type" => "text/csv",
-            "Content-Disposition" => "attachment; filename=\"$filename\"",
-            "Pragma" => "no-cache",
-            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
-            "Expires" => "0"
-        ]);
+        return Excel::download(new PtkExport, 'Data_PTK_' . now()->format('d-m-Y') . '.xlsx');
     }
 
 
