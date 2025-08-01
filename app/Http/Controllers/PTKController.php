@@ -65,6 +65,7 @@ class PTKController extends Controller
         $validated['status_director'] = 'pending';
         $validated['status_hr'] = 'pending';
         $validated['is_published'] = false;
+        $validated['status_ptk'] = 'pending';
 
         $validated['user_id'] = Auth::id();
         $ptk = Ptk::create($validated);
@@ -100,7 +101,8 @@ class PTKController extends Controller
         } elseif ($user->role === 'hr_manager') {
 
             $ptk->status_hr = 'approved';
-            $ptk->is_published = true;
+            $ptk->status_ptk = 'approved';
+            //$ptk->is_published = true;
     
         } else {
             return back()->with('error', 'Anda tidak memiliki hak untuk approve.');
@@ -151,6 +153,7 @@ class PTKController extends Controller
         }
 
         $ptk->is_published = false;
+        $ptk->status_ptk = 'rejected';
         $ptk->save();
 
         $creator = User::find($ptk->user_id);
@@ -160,12 +163,33 @@ class PTKController extends Controller
         
         return back()->with('success', 'PTK berhasil ditolak.');
     }
-public function edit(Ptk $ptk)
-{
-    $user = Auth::user();
-    if ($user->role !== 'staff') {
-        return redirect()->route('ptk.index')->with('error', 'Hanya staff yang bisa mengedit pengajuan.');
+
+    public function publish(Ptk $ptk)
+    {
+        // Validasi semua approval sudah OK
+        if (
+            $ptk->status_manager === 'approved' &&
+            $ptk->status_director === 'approved' &&
+            $ptk->status_hr === 'approved' &&
+            !$ptk->is_published
+        ) {
+            $ptk->is_published = true;
+            $ptk->status_ptk = 'published';
+            $ptk->save();
+
+            return back()->with('success', 'Lowongan berhasil dipublikasikan.');
+        }
+
+        return back()->with('error', 'Lowongan belum disetujui sepenuhnya.');
     }
+
+
+    public function edit(Ptk $ptk)
+    {
+        $user = Auth::user();
+        if ($user->role !== 'staff') {
+            return redirect()->route('ptk.index')->with('error', 'Hanya staff yang bisa mengedit pengajuan.');
+        }
 
     if (
         $ptk->status_manager !== 'rejected' &&
@@ -227,6 +251,7 @@ public function update(Request $request, Ptk $ptk)
             'status_manager' => 'pending',
             'status_director' => 'pending',
             'status_hr' => 'pending',
+            'status_ptk' => 'pending',
             'is_published' => false,
             'reject_reason_manager' => null,
             'reject_reason_director' => null,

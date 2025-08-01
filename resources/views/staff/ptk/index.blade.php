@@ -185,13 +185,17 @@
                             <td class="px-6 py-4 whitespace-nowrap">{{ $ptk->permintaan }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ \Carbon\Carbon::parse($ptk->tanggal_permintaan)->format('d-m-Y') }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                @if($ptk->status_manager === 'rejected' || $ptk->status_director === 'rejected' || $ptk->status_hr === 'rejected')
-                                    <span class="text-red-600 font-semibold">Rejected</span>
-                                @elseif($ptk->is_published)
-                                    <span class="text-green-600 font-semibold">Approved</span>
-                                @else
-                                    <span class="text-yellow-600 font-semibold">Pending</span>
-                                @endif
+                                @php
+                                    $status = $ptk->status_ptk;
+                                    $color = [
+                                        'pending' => 'text-yellow-600',
+                                        'approved' => 'text-green-600',
+                                        'published' => 'text-blue-600',
+                                        'rejected' => 'text-red-600',
+                                    ][$status] ?? 'text-gray-600';
+                                @endphp
+
+                                <span class="{{ $color }} font-semibold">{{ ucfirst($status) }}</span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <a href="{{ route('ptk.show', $ptk->id) }}" class="text-blue-600 hover:underline">Detail</a>

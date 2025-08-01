@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Akun_psikotest;
+use App\Models\AkunPsikotest;
 use App\Models\Apply;
 use App\Models\Psikotest;
 use App\Models\PsikotestAccount;

@@ -212,11 +212,30 @@
                 </div>
             @endif
 
-            <form action="{{ route('ptk.index') }}" method="GET" class="mt-4">
-                <button type="submit" class="bg-gray-200 text-gray-800 px-6 py-2 rounded hover:bg-gray-300">
-                    ← Kembali ke daftar PTK
-                </button>
-            </form>
+            <div class="mt-4 flex gap-4">
+                <!-- Form tombol kembali -->
+                <form action="{{ route('ptk.index') }}" method="GET" class="mt-4 inline-block">
+                    <button type="submit" class="bg-gray-200 text-gray-800 px-6 py-2 rounded hover:bg-gray-300">
+                        ← Kembali ke daftar PTK
+                    </button>
+                </form>
+
+                <!-- Form publikasi (hanya muncul jika semua approved dan belum published) -->
+                @if (
+                    $ptk->status_manager === 'approved' &&
+                    $ptk->status_director === 'approved' &&
+                    $ptk->status_hr === 'approved' &&
+                    !$ptk->is_published
+                )
+                    <form action="{{ route('ptk.publish', $ptk->id) }}" method="POST" class="inline-block ml-2">
+                        @csrf
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                            Publikasikan
+                        </button>
+                    </form>
+                @endif
+            </div>
+
         </div>
     </div>
 

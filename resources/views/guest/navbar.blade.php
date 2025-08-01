@@ -14,9 +14,10 @@
                     <x-nav-link :href="route('lowongan.index')" :active="request()->routeIs('lowongan.index')">
                         {{ __('Lowongan') }}
                     </x-nav-link>
+                    <!--
                     <x-nav-link :href="route('psikotest.index')" :active="request()->routeIs('psikotest.index')">
                         {{ __('Psikotes') }}
-                    </x-nav-link>
+                    </x-nav-link> -->
                     <x-nav-link :href="route('guest.dashboard')" :active="request()->routeIs('guest.dashboard')">
                         {{ __('About') }}
                     </x-nav-link>

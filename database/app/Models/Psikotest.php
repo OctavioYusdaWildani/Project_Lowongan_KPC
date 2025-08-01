@@ -19,7 +19,7 @@ class Psikotest extends Model
 
     public function akun()
 {
-    return $this->hasOne(Akun_Psikotest::class);
+    return $this->hasOne(AkunPsikotest::class);
 }
 
 

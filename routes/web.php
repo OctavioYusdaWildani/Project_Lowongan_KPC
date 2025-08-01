@@ -11,6 +11,7 @@ use App\Http\Middleware\RoleMiddleware;
 use Mews\Captcha\Facades\Captcha;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\GuestPublicController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -112,6 +113,12 @@ Route::get('/test-email', function () {
 Route::middleware(['auth', RoleMiddleware::class . ':guest'])->group(function () {
     Route::get('/guest-rekrutmen', [ApplyController::class, 'progress'])->name('guest.rekrutmen');
 });
+
+//guest public
+Route::get('/karir', [GuestPublicController::class, 'index'])->name('guest.public.index');
+
+//public lowongan
+Route::post('/ptk/{ptk}/publish', [PTKController::class, 'publish'])->name('ptk.publish');
 
 
 require __DIR__.'/auth.php';
