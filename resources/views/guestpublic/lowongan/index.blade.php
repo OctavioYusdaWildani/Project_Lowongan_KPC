@@ -1,6 +1,5 @@
 <x-app-layout>
-
-    <div class="py-6 ">
+<div class="py-6 ">
         <div class="mb-6 max-w-7xl mx-auto sm:px-6 lg:px-8 mt-5">
             <h1 class="text-4xl font-bold text-white text-center">Lowongan Kerja Terbaru</h1>
         </div>
@@ -38,4 +37,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</x-app-layout>    

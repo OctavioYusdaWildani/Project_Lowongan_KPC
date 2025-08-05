@@ -23,6 +23,11 @@
 
     {{-- Seluruh konten halaman --}}
     <div class="flex flex-col min-h-screen">
+         {{-- Tampilkan navbar public kalau user belum login --}}
+        @guest
+            @include('guestpublic.navbar')
+        @endguest
+        
         @auth
             @switch(Auth::user()->role)
                 @case('guest')
@@ -59,7 +64,7 @@
 <!-- Footer -->
     <footer class="bg-white bg-opacity-90 text-center text-gray-600 py-4 shadow-inner">
     <div class="max-w-7xl mx-auto px-4">
-        <p class="text-sm">&copy; {{ date('Y') }} PT Kansai Prakarsa Coatings. All rights reserved.</p>
+        <p class="text-sm">&copy; {{ date('Y') }} Octavio Yusda Wildani and Aliefyan Hakim. All rights reserved.</p>
     </div>
 </footer>
 

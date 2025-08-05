@@ -188,17 +188,29 @@
                                 @php
                                     $status = $ptk->status_ptk;
                                     $color = [
-                                        'pending' => 'text-yellow-600',
-                                        'approved' => 'text-green-600',
-                                        'published' => 'text-blue-600',
+                                        'pending' => 'text-amber-500',
+                                        'pending_manager' => 'text-blue-500',
+                                        'pending_director' => 'text-indigo-600',
+                                        'pending_hr' => 'text-teal-600',
+                                        'approved' => 'text-emerald-600',
+                                        'published' => 'text-sky-600',
                                         'rejected' => 'text-red-600',
                                     ][$status] ?? 'text-gray-600';
+                                    $statusText = [
+                                        'pending' => 'Pending',
+                                        'pending_manager' => 'Pending Manager',
+                                        'pending_director' => 'Pending Director',
+                                        'pending_hr' => 'Pending HR',
+                                        'approved' => 'Approved',
+                                        'published' => 'Published',
+                                        'rejected' => 'Rejected',
+                                    ][$status] ?? ucfirst($status);
                                 @endphp
 
-                                <span class="{{ $color }} font-semibold">{{ ucfirst($status) }}</span>
+                                <span class="{{ $color }} font-semibold">{{ $statusText }}</span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <a href="{{ route('ptk.show', $ptk->id) }}" class="text-blue-600 hover:underline">Detail</a>
+                                <a href="{{ route('ptk.show', $ptk->id) }}" class="text-teal-600 hover:text-teal-800 hover:underline">Detail</a>
                             </td>
                         </tr>
                     @empty

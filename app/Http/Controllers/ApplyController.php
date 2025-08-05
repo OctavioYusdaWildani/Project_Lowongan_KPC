@@ -66,6 +66,7 @@ class ApplyController extends Controller
             'keahlian_khusus' => $request->keahlian_khusus,
             'cv_path' => $cvPath,
             'images' => $imagePaths, 
+            'status' => 'melamar',
         ]);
         
         $ptk = Ptk::find($ptkId);
@@ -85,8 +86,12 @@ class ApplyController extends Controller
     
     public function show($id)
     {
-        $lamaran = Apply::with('ptk')->findOrFail($id); // Hapus 'user'
-        return view('staff.lamaran.show', compact('lamaran'));
+        $lamaran = Apply::findOrFail($id);
+
+        // Default status jika belum ada
+        $statusSaatIni = $lamaran->status ?? 'melamar';
+
+        return view('staff.lamaran.show', compact('lamaran', 'statusSaatIni'));
     }
     
     public function progress()
@@ -101,20 +106,22 @@ class ApplyController extends Controller
 public function approve($id)
 {
     $lamaran = Apply::findOrFail($id);
+    $statusSaatIni = $lamaran->status;
 
-    // Tahapan lamaran
-    $tahapan = ['melamar', 'diproses', 'psikotest', 'hr_interview', 'user_interview', 'selesai'];
+    $statusBerikutnya = match($statusSaatIni) {
+        'melamar' => 'psikotest',
+        'psikotest' => 'hr_interview',
+        'hr_interview' => 'user_interview',
+        'user_interview' => 'selesai',
+        default => null,
+    };
 
-    // Cari posisi sekarang
-    $index = array_search($lamaran->status, $tahapan);
-
-    if ($index !== false && $index < count($tahapan) - 1) {
-        $lamaran->status = $tahapan[$index + 1];
+    if ($statusBerikutnya) {
+        $lamaran->status = $statusBerikutnya;
+        $lamaran->save();
     }
 
-    $lamaran->save();
-
-    return back()->with('success', 'Lamaran dilanjutkan ke tahap berikutnya.');
+    return redirect()->back()->with('success', 'Status berhasil diperbarui.');
 }
 
 public function reject($id)

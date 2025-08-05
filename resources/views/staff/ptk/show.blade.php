@@ -227,9 +227,9 @@
                     $ptk->status_hr === 'approved' &&
                     !$ptk->is_published
                 )
-                    <form action="{{ route('ptk.publish', $ptk->id) }}" method="POST" class="inline-block ml-2">
+                    <form action="{{ route('ptk.publish', $ptk->id) }}" method="POST" class="inline-block mt-4">
                         @csrf
-                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        <button type="submit" class="bg-[#00205B] text-white px-4 py-2 rounded hover:bg-red-600">
                             Publikasikan
                         </button>
                     </form>

@@ -99,7 +99,7 @@ class PsikotestController extends Controller
     }
     public function manageIndex()
 {
-    $akunList = Akun_Psikotest::with('psikotest')->get();
+    $akunList = AkunPsikotest::with('psikotest')->get();
     return view('staff.manage_psikotest.index', compact('akunList'));
 }
 

@@ -115,10 +115,16 @@ Route::middleware(['auth', RoleMiddleware::class . ':guest'])->group(function ()
 });
 
 //guest public
-Route::get('/karir', [GuestPublicController::class, 'index'])->name('guest.public.index');
+Route::get('/public', [GuestPublicController::class, 'index'])->name('guest.karir');
+Route::get('/public/{id}', [GuestPublicController::class, 'show'])->name('guest.karir.show');
 
 //public lowongan
 Route::post('/ptk/{ptk}/publish', [PTKController::class, 'publish'])->name('ptk.publish');
+
+// About untuk guest public (tidak perlu login)
+Route::get('/about', function () {
+    return view('guestpublic.dashboard');
+})->name('guestpublic.dashboard'); 
 
 
 require __DIR__.'/auth.php';

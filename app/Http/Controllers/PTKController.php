@@ -65,7 +65,7 @@ class PTKController extends Controller
         $validated['status_director'] = 'pending';
         $validated['status_hr'] = 'pending';
         $validated['is_published'] = false;
-        $validated['status_ptk'] = 'pending';
+        $validated['status_ptk'] = 'pending_manager';
 
         $validated['user_id'] = Auth::id();
         $ptk = Ptk::create($validated);
@@ -81,8 +81,8 @@ class PTKController extends Controller
         $user = Auth::user();
     
         if ($user->role === 'department_manager') {
-  
-            $ptk->status_manager = 'approved';
+        $ptk->status_manager = 'approved';
+        $ptk->status_ptk = 'pending_director';
 
         $directors = User::where('role', 'director')->get();
         foreach ($directors as $director) {
@@ -90,8 +90,8 @@ class PTKController extends Controller
             }  
 
         } elseif ($user->role === 'director') {
-  
-            $ptk->status_director = 'approved';
+        $ptk->status_director = 'approved';
+        $ptk->status_ptk = 'pending_hr';
 
         $hrManagers = User::where('role', 'hr_manager')->get();
         foreach ($hrManagers as $hr) {
@@ -251,7 +251,7 @@ public function update(Request $request, Ptk $ptk)
             'status_manager' => 'pending',
             'status_director' => 'pending',
             'status_hr' => 'pending',
-            'status_ptk' => 'pending',
+            'status_ptk' => 'pending_manager',
             'is_published' => false,
             'reject_reason_manager' => null,
             'reject_reason_director' => null,

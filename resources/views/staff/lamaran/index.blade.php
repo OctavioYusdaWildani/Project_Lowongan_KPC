@@ -24,28 +24,40 @@
                         <td class="px-6 py-4 whitespace-nowrap">{{ $lamaran->email }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ $lamaran->telepon }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">
-    @php
-        $statusClass = match($lamaran->status) {
-            'melamar' => 'text-orange-600',
-            'diproses' => 'bg-green-100 text-green-800',
-            default => 'bg-gray-100 text-red-600',
-        };
-    @endphp
+                            @php
+                                $statusClass = match($lamaran->status) {
+                                    'melamar' => 'text-gray-600',
+                                    'psikotest' => 'text-blue-600',
+                                    'hr_interview' => 'text-amber-600',
+                                    'user_interview' => 'text-purple-600',
+                                    'selesai' => 'text-emerald-700',
+                                    default => 'text-red-600',
+                                };
+                                $statusText = match($lamaran->status) {
+                                'melamar' => 'Lamaran Masuk',
+                                'psikotest' => 'Psikotes',
+                                'hr_interview' => 'Interview HR',
+                                'user_interview' => 'Interview User',
+                                'selesai' => 'Selesai',
+                                default => 'Ditolak',
+                            };
+                            @endphp
 
-    <span class="px-2 py-1 rounded text-sm font-semibold {{ $statusClass }}">
-        {{ ucfirst($lamaran->status) }}
-    </span>
-</td>
+                            <span class="px-2 py-1 rounded text-sm font-semibold {{ $statusClass }}">
+                                {{ $statusText }}
+                            </span>
+
+                        </td>
 
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <a href="{{ route('lamaran.show', $lamaran->id) }}" class="text-blue-600 hover:underline">Detail</a>
+                            <a href="{{ route('lamaran.show', $lamaran->id) }}" class="text-teal-600 hover:text-teal-800 hover:underline">Detail</a>
                         </td>
                     </tr>
-                @empty
-                    <tr>
-                        <td colspan="5" class="text-center py-4 text-gray-500">Belum ada lamaran.</td>
-                    </tr>
-                @endforelse
+                    @empty
+                        <tr>
+                            <td colspan="5" class="text-center py-4 text-gray-500">Belum ada lamaran.</td>
+                        </tr>
+                    @endforelse
             </tbody>
         </table>
     </div>

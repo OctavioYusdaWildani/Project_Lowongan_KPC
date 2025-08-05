@@ -57,7 +57,7 @@
                     <tr>
                         <th class="border-2 border-black px-4 py-2">Status Lamaran</th>
                         <td class="border-2 border-black px-4 py-2 capitalize">
-                            {{ $lamaran->status ?? 'melamar' }}
+                            {{ $statusSaatIni }}
                         </td>
                     </tr>
 
@@ -75,18 +75,31 @@
                 </div>
             </div>
 
-            @if ($lamaran->status === 'melamar')
+            @php
+                $nextSteps = [
+                    'melamar' => 'Continue to Psychotest',
+                    'psikotest' => 'Continue to HR Interview',
+                    'hr_interview' => 'Continue to User Interview',
+                    'user_interview' => 'Finish Recruitment',
+                ];
+            @endphp
+
+            @php
+                $statusSaatIni = $lamaran->status ?? 'melamar';
+            @endphp
+
+            @if (isset($nextSteps[$statusSaatIni]))
                 <div class="mt-6 flex gap-4">
-                    <!-- Lanjut ke proses berikut -->
+                    <!-- Tombol Lanjut Proses -->
                     <form action="{{ route('lamaran.approve', $lamaran->id) }}" method="POST">
                         @csrf
-                        <button class="bg-[#00205B] text-white font-bold py-2 px-4 rounded"
+                        <button class="bg-[#00205B] hover:bg-[#001640] text-white font-bold py-2 px-4 rounded"
                             onclick="return confirm('Lanjutkan ke proses selanjutnya?')">
-                            Continue Next Process
+                            {{ $nextSteps[$statusSaatIni] }}
                         </button>
                     </form>
 
-                    <!-- Tolak lamaran -->
+                    <!-- Tombol Reject -->
                     <form action="{{ route('lamaran.reject', $lamaran->id) }}" method="POST">
                         @csrf
                         <button class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
@@ -96,6 +109,7 @@
                     </form>
                 </div>
             @endif
+
 
 
             <form action="{{ route('lamaran.index') }}" method="GET">

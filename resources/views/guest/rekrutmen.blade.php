@@ -8,9 +8,9 @@
                 @php
                     $steps = [
                         'melamar' => ['title' => 'Apply Lowongan', 'desc' => 'Pengajuan aplikasi dan berkas', 'icon' => '📄'],
-                        'diproses' => ['title' => 'Online Psychotest', 'desc' => 'Tes psikologi dan kemampuan', 'icon' => '🧠'],
-                        'psikotest' => ['title' => 'HR Interview', 'desc' => 'Wawancara dengan HR', 'icon' => '🧍'],
-                        'wawancara' => ['title' => 'User Interview', 'desc' => 'Wawancara dengan user', 'icon' => '💼'],
+                        'psikotest' => ['title' => 'Online Psychotest', 'desc' => 'Tes psikologi dan kemampuan', 'icon' => '🧠'],
+                        'hr_interview' => ['title' => 'HR Interview', 'desc' => 'Wawancara dengan HR', 'icon' => '🧍'],
+                        'user_interview' => ['title' => 'User Interview', 'desc' => 'Wawancara dengan user', 'icon' => '💼'],
                     ];
                     $statusList = array_keys($steps);
                     $currentStatus = $lamaran->status ?? null;
@@ -21,14 +21,15 @@
                     @foreach ($steps as $key => $step)
                         @php
                             $index = array_search($key, $statusList);
-                            $isPassed = $index < $currentIndex;
-                            $isCurrent = $index == $currentIndex;
+                            $isPassed = $currentStatus === 'selesai' || $index < $currentIndex;
+                            $isCurrent = $currentStatus !== 'selesai' && $index == $currentIndex;
 
-                            $color = $isPassed || $isCurrent ? 'bg-green-500 text-white' : 'bg-gray-300 text-white';
-                            $opacity = $index > $currentIndex ? 'opacity-40' : '';
+                            $color = $currentStatus === 'selesai' || $isPassed || $isCurrent ? 'bg-green-500 text-white' : 'bg-gray-300 text-white';
+                            $opacity = $currentStatus !== 'selesai' && $index > $currentIndex ? 'opacity-40' : '';
                             
-                            $statusLabel = $isCurrent ? 'Sedang Berlangsung' : ($isPassed ? 'Selesai' : 'Belum Dimulai');
-                            $statusColor = $isCurrent ? 'text-green-600' : ($isPassed ? 'text-gray-600' : 'text-gray-500');
+                            $statusLabel = $currentStatus === 'selesai'
+                                ? 'Selesai'
+                                : ($isCurrent ? 'Sedang Berlangsung' : ($isPassed ? 'Selesai' : 'Belum Dimulai'));                                                    $statusColor = $isCurrent ? 'text-green-600' : ($isPassed ? 'text-gray-600' : 'text-gray-500');
                         @endphp
 
                         <div class="bg-white rounded-xl shadow p-4 {{ $opacity }}">
@@ -57,16 +58,32 @@
                                 @case('melamar')
                                     Lamaran Anda telah diterima. Kami akan meninjau dokumen Anda segera.
                                     @break
-                                @case('diproses')
+                                @case('psikotest')
                                     Silakan mengikuti psikotes yang telah dikirim ke email Anda.
                                     @break
-                                @case('psikotest')
+                                @case('hr_interview')
                                     Anda telah mengikuti psikotes. Tim HR akan menghubungi Anda untuk jadwal wawancara.
+                                    @break
+                                @case('user_interview')
+                                    Anda akan menjalani wawancara tahap akhir bersama user terkait posisi ini.
                                     @break
                             @endswitch
                         </p>
                     </div>
                 @endif
+
+                @if ($currentStatus === 'selesai')
+                    <div class="bg-green-100 p-6 rounded-lg text-left">
+                        <h3 class="text-2xl font-bold text-green-700">🎉 Selamat!</h3>
+                        <p class="text-gray-800 mt-2">
+                            Anda telah menyelesaikan seluruh proses rekrutmen. Terima kasih telah mengikuti setiap tahapannya.
+                        </p>
+                        <p class="text-sm text-gray-600 mt-2">
+                            Kami akan segera menghubungi Anda untuk informasi lebih lanjut terkait hasil akhir rekrutmen.
+                        </p>
+                    </div>
+                @endif
+
 
             </div>
         </div>
