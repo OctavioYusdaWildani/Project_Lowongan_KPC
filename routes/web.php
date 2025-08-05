@@ -64,7 +64,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/ptk/{ptk}/resubmit', [PTKController::class, 'resubmit'])->name('ptk.resubmit');
 });
 
-Route::get('/ptk/export/excel', [App\Http\Controllers\PTKController::class, 'exportExcel'])->name('ptk.export.excel');
+//Export Excel 
+Route::get('/ptk/export/csv', [App\Http\Controllers\PtkController::class, 'exportCsv'])->name('ptk.export.csv');
 
 // Lowongan
 Route::get('/lowongan', [LowonganController::class, 'index'])->name('lowongan.index');

@@ -10,7 +10,8 @@
         @endif
 
         <div x-data="{ open: false }">
-            <a href="{{ route('ptk.export.excel') }}" class="bg-[#61CE70] text-white px-4 py-2 rounded mb-4 ml-2 inline-block hover:bg-green-600">
+            <!-- Export Excel -->
+            <a href="{{ route('ptk.export.csv') }}" class="bg-[#61CE70] text-white px-4 py-2 rounded mb-4 ml-2 inline-block hover:bg-green-600">
                 Export CSV
             </a>
             
